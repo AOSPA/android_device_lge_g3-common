@@ -79,6 +79,7 @@ TARGET_HW_DISK_ENCRYPTION := true
 ifeq ($(HOST_OS),linux)
   ifeq ($(WITH_DEXPREOPT),)
     WITH_DEXPREOPT := true
+    WITH_DEXPREOPT_COMP := false
   endif
 endif
 DONT_DEXPREOPT_PREBUILTS := true
