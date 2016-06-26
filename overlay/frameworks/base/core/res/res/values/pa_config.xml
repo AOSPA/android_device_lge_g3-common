@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/*
-** Copyright 2016, The CyanogenMod Project
+** Copyright (C) 2016, ParanoidAndroid Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -16,8 +15,7 @@
 ** limitations under the License.
 */
 -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources>
 
     <!-- Enable the option to check proximity sensor when deciding whether to turn the screen on
          NOTE ! - Enable for devices that have a fast response proximity sensor
@@ -29,6 +27,6 @@
     <integer name="config_proximityCheckTimeout">100</integer>
 
     <!-- Proximity check on screen on default -->
-    <bool name="config_proximityCheckOnWakeEnabledByDefault">true</bool>
+    <bool name="config_proximityCheckOnWakeEnabledByDefault">false</bool>
 
 </resources>
