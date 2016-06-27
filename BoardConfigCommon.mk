@@ -16,6 +16,9 @@
 # inherit from the proprietary version
 -include vendor/lge/g3-common/BoardConfigVendor.mk
 
+# include additional build utilities
+include device/qcom/common/utils.mk
+
 LOCAL_PATH := device/lge/g3-common
 
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
@@ -23,7 +26,6 @@ TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 # Platform
 TARGET_BOARD_PLATFORM := msm8974
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno330
-USE_CLANG_PLATFORM_BUILD := true
 
 # Architecture
 TARGET_ARCH := arm
@@ -72,6 +74,9 @@ COMMON_GLOBAL_CFLAGS += -DPROPERTY_PERMS_APPEND=' \
     { "persist.data.front.minfps", AID_MEDIA, 0 }, \
     '
 
+# CMHW
+TARGET_TAP_TO_WAKE_NODE := "/sys/devices/virtual/input/lge_touch/tap_to_wake"
+
 # Crypto
 TARGET_HW_DISK_ENCRYPTION := true
 
@@ -111,7 +116,9 @@ TARGET_POWERHAL_VARIANT := qcom
 BOARD_RIL_CLASS += ../../../device/lge/g3-common/ril
 
 # Qualcomm support
-BOARD_USES_QCOM_HARDWARE := true
+TARGET_USES_QCOM_BSP := true
+TARGET_COMPILE_WITH_MSM_KERNEL := true
+TARGET_USES_AOSP := false
 
 # Recovery
 BOARD_SUPPRESS_EMMC_WIPE := true

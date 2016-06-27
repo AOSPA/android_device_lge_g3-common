@@ -5,6 +5,8 @@ init_daemon_domain(hwaddrs)
 
 allow hwaddrs self:capability dac_override;
 
+allow hwaddrs block_device:dir r_dir_perms;
+
 allow hwaddrs misc_partition:blk_file { read open };
 
 allow hwaddrs bluetooth_data_file:file create_file_perms;
