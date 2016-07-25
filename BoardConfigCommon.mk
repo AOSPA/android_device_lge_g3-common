@@ -1,0 +1,133 @@
+#
+# Copyright (C) 2016 The CyanogenMod Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# inherit from the proprietary version
+-include vendor/lge/g3-common/BoardConfigVendor.mk
+
+# include additional build utilities
+include device/qcom/common/utils.mk
+
+LOCAL_PATH := device/lge/g3-common
+
+TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
+
+# Platform
+TARGET_BOARD_PLATFORM := msm8974
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno330
+
+# Architecture
+TARGET_ARCH := arm
+TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_CPU_ABI := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
+TARGET_CPU_VARIANT := krait
+
+# Bootloader
+TARGET_BOOTLOADER_BOARD_NAME := MSM8974
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
+
+# Kernel
+BOARD_CUSTOM_BOOTIMG := true
+BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
+BOARD_KERNEL_CMDLINE := console=none androidboot.hardware=g3 user_debug=31 msm_rtb.filter=0x0
+BOARD_KERNEL_BASE := 0x00000000
+BOARD_KERNEL_PAGESIZE := 2048
+BOARD_KERNEL_SEPARATED_DT := true
+BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x0008000 --ramdisk_offset 0x2000000
+TARGET_KERNEL_SOURCE := kernel/lge/g3
+
+ifeq ($(filter d852, $(TARGET_DEVICE)),)
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-linux-androideabi-
+endif
+
+# Audio
+BOARD_USES_ALSA_AUDIO := true
+AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
+AUDIO_FEATURE_ENABLED_NEW_SAMPLE_RATE := true
+AUDIO_FEATURE_ENABLED_COMPRESS_VOIP := false
+USE_CUSTOM_AUDIO_POLICY := 1
+
+# Bluetooth
+BOARD_HAVE_BLUETOOTH := true
+
+# Camera
+USE_DEVICE_SPECIFIC_CAMERA := true
+COMMON_GLOBAL_CFLAGS += -DCAMERA_VENDOR_L_COMPAT
+COMMON_GLOBAL_CFLAGS += -DLG_CAMERA_HARDWARE
+COMMON_GLOBAL_CFLAGS += -DPROPERTY_PERMS_APPEND=' \
+    { "persist.data.sensor_name", AID_CAMERA, 0 }, \
+    { "camera.4k2k.enable", AID_MEDIA, 0 }, \
+    { "persist.data.rear.minfps", AID_MEDIA, 0 }, \
+    { "persist.data.front.minfps", AID_MEDIA, 0 }, \
+    '
+
+# CMHW
+TARGET_TAP_TO_WAKE_NODE := "/sys/devices/virtual/input/lge_touch/tap_to_wake"
+
+# Crypto
+TARGET_HW_DISK_ENCRYPTION := true
+
+# Dex-preoptimization
+ifeq ($(HOST_OS),linux)
+  ifeq ($(WITH_DEXPREOPT),)
+    WITH_DEXPREOPT := true
+    WITH_DEXPREOPT_COMP := false
+  endif
+endif
+DONT_DEXPREOPT_PREBUILTS := true
+
+# Display
+MAX_EGL_CACHE_KEY_SIZE := 12*1024
+MAX_EGL_CACHE_SIZE := 2048*1024
+OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
+TARGET_USES_C2D_COMPOSITION := true
+TARGET_USES_ION := true
+USE_OPENGL_RENDERER := true
+
+# Lights
+TARGET_PROVIDES_LIBLIGHT := true
+
+# Offmode Charging
+BOARD_HEALTHD_CUSTOM_CHARGER_RES := $(LOCAL_PATH)/charger/images
+COMMON_GLOBAL_CFLAGS += \
+    -DBOARD_CHARGING_CMDLINE_NAME='"androidboot.mode"' \
+    -DBOARD_CHARGING_CMDLINE_VALUE='"chargerlogo"'
+
+# Partitions
+BOARD_FLASH_BLOCK_SIZE := 131072
+
+# Power
+TARGET_POWERHAL_VARIANT := qcom
+
+# RIL
+BOARD_RIL_CLASS += ../../../device/lge/g3-common/ril
+
+# Qualcomm support
+TARGET_USES_QCOM_BSP := true
+TARGET_COMPILE_WITH_MSM_KERNEL := true
+TARGET_USES_AOSP := false
+
+# Recovery
+BOARD_SUPPRESS_EMMC_WIPE := true
+COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+TARGET_USERIMAGES_USE_EXT4 := true
+
+# SELinux
+BOARD_SEPOLICY_DIRS += device/lge/g3-common/sepolicy
+
+# Time services
+BOARD_USES_QC_TIME_SERVICES := true
