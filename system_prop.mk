@@ -17,7 +17,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # SnapdragonCamera properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.camera.feature.restart=true
+    persist.camera.preview.size=4
 
 # Bluetooth
 PRODUCT_PROPERTY_OVERRIDES += \
